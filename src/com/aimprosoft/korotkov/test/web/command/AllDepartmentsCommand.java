@@ -1,0 +1,36 @@
+package com.aimprosoft.korotkov.test.web.command;
+
+import com.aimprosoft.korotkov.test.Path;
+import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.entity.Department;
+import com.aimprosoft.korotkov.test.exception.AppException;
+import org.apache.log4j.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * Created by Андрей on 30.01.2017.
+ */
+public class AllDepartmentsCommand extends Command {
+
+    private static final long serialVersionUID = 6944286214073878561L;
+
+    private static final Logger LOG = Logger.getLogger(AllDepartmentsCommand.class);
+
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
+
+        List<Department> departments = DBManager.getInstance().findDepartments();
+
+        LOG.trace("Found in DB: departmentsList --> " + departments);
+
+        request.setAttribute("departments", departments);
+
+        LOG.debug("Command finished");
+        return Path.PAGE_ALL_DEPARTMENTS;
+    }
+}

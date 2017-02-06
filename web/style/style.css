@@ -1,0 +1,143 @@
+body {
+    margin: 0;
+}
+
+table {
+    border-collapse:collapse;
+}
+
+td {
+    border:1px solid black;
+    padding: 2px;
+}
+
+
+#header, #footer, .content {
+    border: 0px solid;
+}
+
+#main-container {
+    width: 100%;
+    height: 100%;
+}
+
+#header {
+    background: #ADD8E6;
+    padding: 0px;
+}
+
+#leftHeader {
+    background: #679989;
+    float: left;
+    margin-left: 10px;
+    padding: 2px;
+}
+
+#rightHeader {
+    background: #778899;
+    float: right;
+    text-align: right;
+    margin-right: 10px;
+    padding: 2px;
+}
+
+.content {
+    height: 100%;
+    background: #ADFF2F;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#footer {
+    text-align: center;
+    background: #ADD8E6;
+}
+
+.error {
+    font-size: large;
+    color: rgb(204, 0, 0);
+}
+
+.center {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.noborder {
+    border: 2px solid red;
+}
+
+#start_form > fieldset {
+    display: inline;
+}
+
+#start_form > input[type=submit] {
+    margin-top: 5px;
+}
+
+#add_form > div > p {
+    font-size: 17px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+#add_form > input[type=submit] {
+    margin-top: 10px;
+}
+
+#update_form > div > p {
+    font-size: 17px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+#update_form > input[type=submit] {
+    margin-top: 10px;
+}
+
+#delete_form > div > p {
+    font-size: 17px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+#delete_form > input[type=submit] {
+    margin-top: 10px;
+}
+
+#list_departments_table {
+    margin-top: 5px;
+}
+
+#list_departments_table thead {
+    text-align: center;
+}
+
+#list_departments_table td:last-child {
+    text-align: center;
+}
+
+#list_employees_table {
+    margin-top: 5px;
+}
+
+#list_employees_table thead {
+    text-align: center;
+}
+
+#list_employees_table td:last-child {
+    text-align: center;
+}
+
+
+
+#make_departments {
+    margin-top: 5px;
+}
+
+#make_employees {
+    margin-top: 5px;
+}
