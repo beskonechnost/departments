@@ -37,7 +37,8 @@ public class ListEmployeesThisDepartmentCommand extends Command {
             forward = Path.PAGE_ALL_EMPLOYEES;
         }else{
             int idDepartment = Integer.parseInt(id);
-            employees = DBManager.getInstance().findEmployeesThisDepartment(idDepartment);
+            String nameDep = request.getParameter("itemName");
+            employees = DBManager.getInstance().findEmployeesThisDepartment(nameDep);
             request.setAttribute("departmentId", request.getParameter("itemId"));
             request.setAttribute("departmentName", request.getParameter("itemName"));
             LOG.debug("department name --> " + request.getParameter("itemName"));

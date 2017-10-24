@@ -14,5 +14,5 @@ public class Fields {
     public static final String EMPLOYEE_BIRTHDAY = "birthday";
     public static final String EMPLOYEE_PHONE = "phone";
     public static final String EMPLOYEE_EMAIL = "email";
-    public static final String EMPLOYEE_ID_DEPARTMENT = "id_departments";
+    public static final String EMPLOYEE_ID_DEPARTMENT = "id_department";
 }

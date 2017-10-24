@@ -51,7 +51,7 @@ public class DBManager {
     private static final String SQL_DELETE_EMPLOYEE = "DELETE FROM employees WHERE employees.id=?";
 
 
-    private static final String SQL_SELECT_EMPLOYEES_THIS_DEPARTMENT = "SELECT * FROM allemployees WHERE departments.id=?";
+    private static final String SQL_SELECT_EMPLOYEES_THIS_DEPARTMENT = "SELECT * FROM allemployees WHERE name=?";
     private static final String SQL_SELECT_ALL_EMPLOYEES = "SELECT * FROM allemployees";
 
     private static final String SQL_ADD_EMPLOYEE = "INSERT INTO employees(firstName, lastName, birthday, phone, email, id_departments) VALUES (?,?,?,?,?,?)";
@@ -159,7 +159,7 @@ public class DBManager {
         return employees;
     }
 
-    public List<EmployeeDep> findEmployeesThisDepartment(int id) throws DBException {
+    public List<EmployeeDep> findEmployeesThisDepartment(String name) throws DBException {
         List<EmployeeDep> employees = new ArrayList<EmployeeDep>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -167,7 +167,7 @@ public class DBManager {
         try {
             con = getConnection();
             pstmt = con.prepareStatement(SQL_SELECT_EMPLOYEES_THIS_DEPARTMENT);
-            pstmt.setInt(1,id);
+            pstmt.setString(1, name);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 employees.add(extractEmployeeDep(rs));
