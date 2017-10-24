@@ -7,15 +7,15 @@ CREATE TABLE `departments`.`departments` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE `departments`.`emploees` (
+CREATE TABLE `departments`.`employees` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `firsName` VARCHAR(45) NOT NULL,
+  `firstName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,
   `birthday` DATE NOT NULL,
-  `phone` VARCHAR(15) NULL,
+  `phone` VARCHAR(17) NULL,
   `email` VARCHAR(64) NULL,
   `id_department` INT NOT NULL,
-  PRIMARY KEY (`id`, `firsName`),
+  PRIMARY KEY (`id`, `firstName`),
   INDEX `id_departments_idx` (`id_department` ASC),
   CONSTRAINT `id_departments`
     FOREIGN KEY (`id_department`)
@@ -31,9 +31,9 @@ INSERT INTO `departments`.`departments` (`name`) VALUES ('HR');
 INSERT INTO `departments`.`departments` (`name`) VALUES ('accounting');
 INSERT INTO `departments`.`departments` (`name`) VALUES ('QA');
 
-INSERT INTO `departments`.employees (firstName, `lastName`, `birthday`, `phone`, `email`, id_departments) VALUES ('Ivan', 'Ivanov', '1991.12.12', '+38050-12-34-567', 'ivanov@gmail.com', '1');
-INSERT INTO `departments`.employees (firstName, `lastName`, `birthday`, `phone`, `email`, id_departments) VALUES ('Petr', 'Petrov', '1988.01.11', '+38099-11-22-333', 'petrov@gmail.com', '3');
-INSERT INTO `departments`.employees (firstName, `lastName`, `birthday`, `phone`, `email`, id_departments) VALUES ('Sidor', 'Sidorov', '1990.10.30', '+38067-99-88-777', 'sidorov@gmail.com', '2');
+INSERT INTO `departments`.employees (firstName, `lastName`, `birthday`, `phone`, `email`, id_department) VALUES ('Ivan', 'Ivanov', '1991.12.12', '+38050-12-34-567', 'ivanov@gmail.com', '1');
+INSERT INTO `departments`.employees (firstName, `lastName`, `birthday`, `phone`, `email`, id_department) VALUES ('Petr', 'Petrov', '1988.01.11', '+38099-11-22-333', 'petrov@gmail.com', '3');
+INSERT INTO `departments`.employees (firstName, `lastName`, `birthday`, `phone`, `email`, id_department) VALUES ('Sidor', 'Sidorov', '1990.10.30', '+38067-99-88-777', 'sidorov@gmail.com', '2');
 
 CREATE
   ALGORITHM = UNDEFINED
@@ -62,4 +62,4 @@ VIEW `departments`.`allemployees` AS
     `departments`.`departments`.`name` AS `name`
   FROM
     (`departments`.`employees`
-      LEFT JOIN `departments`.`departments` ON ((`departments`.`employees`.`id_departments` = `departments`.`departments`.`id`)))
+      LEFT JOIN `departments`.`departments` ON ((`departments`.`employees`.`id_department` = `departments`.`departments`.`id`)))
