@@ -16,6 +16,17 @@ public class Employee extends Entity{
     private String email;
     private int idDepartment;
 
+    public Employee() {
+    }
+    public Employee(String firstName, String lastName, java.sql.Date d, String phone, String email, int id) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = d;
+        this.phone = phone;
+        this.email = email;
+        this.idDepartment = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }

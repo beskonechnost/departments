@@ -7,10 +7,6 @@ import com.aimprosoft.korotkov.test.exception.DBException;
 import com.aimprosoft.korotkov.test.exception.Messages;
 import org.apache.log4j.Logger;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +24,23 @@ public class DBManager {
         return instance;
     }
 
-    private DBManager() throws DBException {
+    /*private DBManager() throws DBException {
         try {
-            Context initContext = new InitialContext();
+            /*Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
             ds = (DataSource) envContext.lookup("jdbc/departments");
             LOG.trace("Data source ==> " + ds);
-        } catch (NamingException ex) {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException ex) {
             LOG.error(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
             throw new DBException(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
         }
     }
+        */
 
-    private DataSource ds;
+
+    //private DataSource ds;
 
     private static final String SQL_FIND_ALL_DEPARTMENTS = "SELECT * FROM alldepartments";
     private static final String SQL_UPDATE_DEPARTMENT = "UPDATE departments SET departments.name=? WHERE departments.id=?";
@@ -59,10 +59,16 @@ public class DBManager {
 
     private static final String SQL_ADD_DEPARTMENT = "INSERT INTO departments(name) VALUES (?)";
 
+    private static String USERNAME = "root";
+    private static String PASSWORD = "root";
+    private static String URL = "jdbc:mysql://localhost:3307/departments";
+
     public Connection getConnection() throws DBException {
         Connection con = null;
         try {
-            con = ds.getConnection();
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            con.setAutoCommit(false);
         } catch (SQLException ex) {
             LOG.error(Messages.ERR_CANNOT_OBTAIN_CONNECTION, ex);
             throw new DBException(Messages.ERR_CANNOT_OBTAIN_CONNECTION, ex);

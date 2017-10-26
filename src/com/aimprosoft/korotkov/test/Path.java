@@ -14,6 +14,7 @@ public class Path {
     public static final String PAGE_ADD_NEW_DEPARTMENT = "/WEB-INF/jsp/add_new_department.jsp";
     public static final String PAGE_DELETE_EMPLOYEE = "/WEB-INF/jsp/delete_employee.jsp";
     public static final String PAGE_UPDATE_EMPLOYEE = "/WEB-INF/jsp/update_employee.jsp";
+    public static final String PAGE_EMPLOYEE = "/WEB-INF/jsp/employees.jsp";
 
 
     public static final String ALL_DEPARTMENTS_COMMAND = "/controller?command=AllDepartments";

@@ -1,7 +1,7 @@
 package com.aimprosoft.korotkov.test.web.command;
 
 import com.aimprosoft.korotkov.test.Path;
-import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.dao.DaoDepartmentImpl;
 import com.aimprosoft.korotkov.test.db.entity.Department;
 import com.aimprosoft.korotkov.test.exception.AppException;
 import org.apache.log4j.Logger;
@@ -24,11 +24,19 @@ public class AllDepartmentsCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
 
-        List<Department> departments = DBManager.getInstance().findDepartments();
-
+        List<Department> departments = DaoDepartmentImpl.getInstance().findDepartments();
         LOG.trace("Found in DB: departmentsList --> " + departments);
-
         request.setAttribute("departments", departments);
+
+        int id;
+        if(!(request.getParameter("departmentId")==null)) {
+            id = Integer.parseInt(request.getParameter("departmentId"));
+        }else {id = 0;}
+        if(!(id==0)){
+            Department updateDepartment = DaoDepartmentImpl.getInstance().getDepartmentById(id);
+            request.setAttribute("updateDepartmentName", updateDepartment.getName());
+            request.setAttribute("updateDepartmentId", updateDepartment.getId());
+        }
 
         LOG.debug("Command finished");
         return Path.PAGE_ALL_DEPARTMENTS;

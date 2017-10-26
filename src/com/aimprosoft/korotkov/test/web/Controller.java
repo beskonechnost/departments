@@ -18,18 +18,8 @@ public class Controller extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(Controller.class);
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
-    }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
-    }
-
-    /**
-     * Main method of this controller.
-     */
-    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         LOG.debug("Controller starts");
         String commandName = request.getParameter("command");

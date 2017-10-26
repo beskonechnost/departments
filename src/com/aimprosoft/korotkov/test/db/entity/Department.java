@@ -9,6 +9,16 @@ public class Department extends Entity{
 
     private String name;
 
+    public Department() {
+    }
+    public Department(int id, String name) {
+        setId(id);
+        this.name = name;
+    }
+    public Department(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

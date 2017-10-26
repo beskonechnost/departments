@@ -1,7 +1,8 @@
 package com.aimprosoft.korotkov.test.web.command;
 
 import com.aimprosoft.korotkov.test.Path;
-import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.dao.DaoDepartmentImpl;
+import com.aimprosoft.korotkov.test.db.entity.Department;
 import com.aimprosoft.korotkov.test.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -25,7 +26,7 @@ public class AddDepartmentCommand extends Command {
         String name = request.getParameter("nameNewDepartment");
 
 
-        if(name.isEmpty() || name==null){
+        if(name==null || name.isEmpty()){
             throw new AppException("The value of name new department can not be empty");
         }
 
@@ -33,7 +34,8 @@ public class AddDepartmentCommand extends Command {
             throw new AppException("Department name can not be shorter than two or longer than 45 characters");
         }
 
-        DBManager.getInstance().addDepartment(name);
+        Department department = new Department(name);
+        DaoDepartmentImpl.getInstance().addDepartment(department);
 
         LOG.debug("Command finished");
         return Path.ALL_DEPARTMENTS_COMMAND;

@@ -16,13 +16,12 @@ public class CommandContainer {
 
     static {
         commands.put("AllDepartments", new AllDepartmentsCommand());
-        commands.put("UpdateDepartment", new UpdateDepartmentCommand());
         commands.put("UpdateDepartmentForm", new UpdateDepartmentFormCommand());
         commands.put("DeleteDepartment", new DeleteDepartmentCommand());
         commands.put("RemovalConfirmationDepartment", new RemovalConfirmationDepartmentCommand());
-        commands.put("ListEmployeesThisDepartment", new ListEmployeesThisDepartmentCommand());
-        commands.put("AddNewEmployeeInThisDepartment", new AddNewEmployeeInThisDepartmentCommand());
+        commands.put("ListEmployees", new ListEmployeesCommand());
         commands.put("AddEmployee", new AddEmployeeCommand());
+        commands.put("Employees", new ListEmployeesCommand());
         commands.put("AddNewDepartment", new AddNewDepartmentCommand());
         commands.put("AddDepartment", new AddDepartmentCommand());
         commands.put("RemovalConfirmationEmployee", new RemovalConfirmationEmployeeCommand());

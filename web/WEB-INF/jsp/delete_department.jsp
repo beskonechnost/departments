@@ -23,7 +23,7 @@
                     <p><b>Are you sure you want to delete "${deleteDepartmentName}" department and all its employees?</b></p>
                 </div>
 
-                <button onclick='history.back()' value="Back">Back</button>
+                <button  value="Back">Back</button>
                 <input type="submit" value="Delete"><br/>
             </form>
 

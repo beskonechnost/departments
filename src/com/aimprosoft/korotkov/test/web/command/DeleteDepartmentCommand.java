@@ -1,7 +1,7 @@
 package com.aimprosoft.korotkov.test.web.command;
 
 import com.aimprosoft.korotkov.test.Path;
-import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.dao.DaoDepartmentImpl;
 import com.aimprosoft.korotkov.test.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -23,7 +23,7 @@ public class DeleteDepartmentCommand extends Command {
 
         int id = Integer.parseInt(request.getParameter("deleteDepartmentId"));
         LOG.debug("delete department id -----------> "+ id);
-        DBManager.getInstance().deleteDepartmentAndAllItsEmployees(id);
+        DaoDepartmentImpl.getInstance().deleteDepartmentAndAllItsEmployees(id);
 
         LOG.debug("Command finished");
         return Path.ALL_DEPARTMENTS_COMMAND;

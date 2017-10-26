@@ -1,7 +1,10 @@
 package com.aimprosoft.korotkov.test.web.command;
 
 import com.aimprosoft.korotkov.test.Path;
-import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.dao.DaoDepartmentImpl;
+import com.aimprosoft.korotkov.test.db.dao.DaoEmployeeImpl;
+import com.aimprosoft.korotkov.test.db.entity.Department;
+import com.aimprosoft.korotkov.test.db.entity.Employee;
 import com.aimprosoft.korotkov.test.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -97,7 +100,10 @@ public class AddEmployeeCommand extends Command {
         LOG.debug("email - "+ email);
         LOG.debug("idDep - "+ idDep);
 
-        DBManager.getInstance().addEmployee(firstName, lastName, d, phone, email, idDep);
+        Department department = DaoDepartmentImpl.getInstance().getDepartmentByName(request.getParameter("departmentName"));
+        Employee employee = new Employee(firstName, lastName, d, phone, email, department.getId());
+        LOG.debug("employee ===== "+employee);
+        DaoEmployeeImpl.getInstance().addEmployee(employee);
         request.setAttribute("itemId", idDep);
         request.setAttribute("itemName", request.getParameter("departmentName"));
         LOG.debug("Command finished");

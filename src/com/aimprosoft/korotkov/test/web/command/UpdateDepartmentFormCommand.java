@@ -1,7 +1,8 @@
 package com.aimprosoft.korotkov.test.web.command;
 
 import com.aimprosoft.korotkov.test.Path;
-import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.dao.DaoDepartmentImpl;
+import com.aimprosoft.korotkov.test.db.entity.Department;
 import com.aimprosoft.korotkov.test.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,7 @@ public class UpdateDepartmentFormCommand extends Command {
         String newName = request.getParameter("name");
         LOG.debug("newName --> "+ newName);
 
-        if(newName.isEmpty()||newName==null){
+        if(newName==null || newName.isEmpty()){
             throw new AppException("Department name can not be empty");
         }
 
@@ -38,7 +39,8 @@ public class UpdateDepartmentFormCommand extends Command {
         }
 
         if(!oldName.equals(newName)){
-            DBManager.getInstance().updateDepartment(id, newName);
+            Department department = new Department(id, newName);
+            DaoDepartmentImpl.getInstance().updateDepartment(department);
         }
 
         LOG.debug("Command finished");

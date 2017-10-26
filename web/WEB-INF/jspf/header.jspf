@@ -7,7 +7,7 @@
 
         <div id="rightHeader">
             <a href="controller?command=AllDepartments">All departments</a>
-            <a href="controller?command=ListEmployeesThisDepartment">All employees</a>
+            <a href="controller?command=ListEmployees">All employees</a>
         </div>
 
     </td>

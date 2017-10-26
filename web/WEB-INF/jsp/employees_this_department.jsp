@@ -66,7 +66,6 @@
                                     <input type="hidden" name="employeeBirthday" value="${item.birthday}" />
                                     <input type="hidden" name="employeePhone" value="${item.phone}" />
                                     <input type="hidden" name="employeeEmail" value="${item.email}" />
-                                    <input type="hidden" name="employeeNameDepartment" value="${item.nameDepartment}" />
                                     <input type="hidden" name="command" value="UpdateEmployee" />
                                     <input type="submit" value="Update">
                                 </form>

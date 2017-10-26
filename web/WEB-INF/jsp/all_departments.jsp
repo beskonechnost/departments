@@ -8,24 +8,14 @@
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
 
 <body>
+<%@ include file="/WEB-INF/jspf/header.jspf" %>
 <table id="main-container">
-
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
 
     <tr>
         <td class="content">
             <%-- CONTENT --%>
 
             <form id="make_departments" action="controller">
-
-                <div>
-                    <form action="controller" method="post">
-                        <b>Add new department - </b>
-                        <input type="hidden" name="command" value="AddNewDepartment" />
-                        <input type="submit" value="Add">
-                    </form>
-                </div>
-
                 <table id="list_departments_table">
                     <thead>
                     <tr>
@@ -41,21 +31,20 @@
                     <c:forEach var="item" items="${departments}">
                         <c:set var="k" value="${k+1}"/>
                         <tr>
-                            <td><c:out value="${k}"/></td>
+                            <td>${k}</td>
                             <td>${item.name}</td>
                             <td>
                                 <form action="controller" method="post">
-                                    <input type="hidden" name="itemId" value="${item.id}" />
-                                    <input type="hidden" name="itemName" value="${item.name}" />
-                                    <input type="hidden" name="command" value="ListEmployeesThisDepartment" />
+                                    <input type="hidden" name="departmentId" value="${item.id}" />
+                                    <input type="hidden" name="departmentName" value="${item.name}" />
+                                    <input type="hidden" name="command" value="ListEmployees" />
                                     <input type="submit" value="List">
                                 </form>
                             </td>
                             <td>
                                 <form action="controller" method="post">
-                                    <input type="hidden" name="itemId" value="${item.id}" />
-                                    <input type="hidden" name="itemName" value="${item.name}" />
-                                    <input type="hidden" name="command" value="UpdateDepartment" />
+                                    <input type="hidden" name="departmentId" value="${item.id}" />
+                                    <input type="hidden" name="command" value="AllDepartments" />
                                     <input type="submit" value="Update">
                                 </form>
                             </td>
@@ -71,7 +60,37 @@
                     </c:forEach>
                 </table>
             </form>
+        </td>
+        <td class="content">
+            <fieldset >
+                <legend>Add new department</legend>
+                <form id="add_form" action="controller" method="post">
+                    <input type="hidden" name="command" value="AddDepartment" />
 
+                    <div>
+                        <b>Enter the name of a new department: </b>
+                        <input name="nameNewDepartment">
+                    </div>
+                    <input type="submit" value="Add New Department"><br/>
+                </form>
+            </fieldset><br>
+            <c:if test="${updateDepartmentId>0}">
+            <fieldset >
+                <legend>Update department</legend>
+                <form id="update_form" action="controller" method="post">
+                    <input type="hidden" name="command" value="UpdateDepartmentForm" />
+                    <input type="hidden" name="id" value="${updateDepartmentId}" />
+                    <input type="hidden" name="oldName" value="${updateDepartmentName}" />
+
+                    <div>
+                        <p>Enter a new department name:</p>
+                        <input name="name" value="${updateDepartmentName}">
+                    </div>
+                    <input type="hidden" name="departmentId" value="${0}" />
+                    <input type="submit" value="Update"><br/>
+                </form>
+            </fieldset>
+            </c:if>
         </td>
     </tr>
 
