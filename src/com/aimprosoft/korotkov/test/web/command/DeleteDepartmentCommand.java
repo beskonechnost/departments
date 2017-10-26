@@ -24,7 +24,6 @@ public class DeleteDepartmentCommand extends Command {
         int id = Integer.parseInt(request.getParameter("deleteDepartmentId"));
         LOG.debug("delete department id -----------> "+ id);
         DaoDepartmentImpl.getInstance().deleteDepartmentAndAllItsEmployees(id);
-
         LOG.debug("Command finished");
         return Path.ALL_DEPARTMENTS_COMMAND;
     }

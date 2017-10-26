@@ -6,15 +6,20 @@
 <html>
 
 <c:set var="title" value="Error" scope="page" />
-<%@ include file="/WEB-INF/jspf/head.jspf" %>
+<link rel="stylesheet" type="text/css" media="screen" href="style/style.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <head>
     <title>Error</title>
 </head>
+<body>
 <table id="main-container">
-
-    <%@ include file="/WEB-INF/jspf/header.jspf"%>
-
+    <tr>
+        <div id="rightHeader">
+            <a href="controller?command=AllDepartments">All departments</a>
+            <a href="controller?command=ListEmployees">All employees</a>
+        </div>
+    </tr>
     <tr >
         <td class="content">
             <%-- CONTENT --%>
@@ -49,8 +54,5 @@
         </td>
     </tr>
 
-    <%@ include file="/WEB-INF/jspf/footer.jspf"%>
-    <body>
-
-    </body>
+</body>
 </html>

@@ -23,10 +23,10 @@ public class AllDepartmentsCommand extends Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
-
         List<Department> departments = DaoDepartmentImpl.getInstance().findDepartments();
         LOG.trace("Found in DB: departmentsList --> " + departments);
         request.setAttribute("departments", departments);
+        request.setAttribute("visibleUpdateDepartment", request.getParameter("visibleUpdateDepartment"));
 
         int id;
         if(!(request.getParameter("departmentId")==null)) {

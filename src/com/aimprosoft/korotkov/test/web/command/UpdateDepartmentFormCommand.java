@@ -30,19 +30,32 @@ public class UpdateDepartmentFormCommand extends Command {
         String newName = request.getParameter("name");
         LOG.debug("newName --> "+ newName);
 
+        boolean flagErrorUpdateDepartment = false;
+        String errorUpdateDepartment = null;
+
         if(newName==null || newName.isEmpty()){
-            throw new AppException("Department name can not be empty");
+            flagErrorUpdateDepartment = true;
+            errorUpdateDepartment = "Department name can not be empty";
         }
 
         if(newName.length()<2||newName.length()>45){
-            throw new AppException("Department name can not be shorter than two or longer than 45 characters");
+            flagErrorUpdateDepartment = true;
+            errorUpdateDepartment = "Department name can not be shorter than two or longer than 45 characters";
         }
 
-        if(!oldName.equals(newName)){
-            Department department = new Department(id, newName);
-            DaoDepartmentImpl.getInstance().updateDepartment(department);
+        if(flagErrorUpdateDepartment){
+            request.setAttribute("updateDepartmentName", request.getParameter("name"));
+            LOG.debug("updateDepartmentName -- > "+request.getParameter("name"));
+            request.setAttribute("visibleUpdateDepartment", request.getParameter("visibleUpdateDepartment"));
+            LOG.debug("visibleUpdateDepartment -- > "+request.getParameter("visibleUpdateDepartment"));
+            request.setAttribute("errorUpdateDepartment", errorUpdateDepartment);
+        }else {
+            if (!oldName.equals(newName)) {
+                request.setAttribute("visibleUpdateDepartment", 0);
+                Department department = new Department(id, newName);
+                DaoDepartmentImpl.getInstance().updateDepartment(department);
+            }
         }
-
         LOG.debug("Command finished");
         return Path.ALL_DEPARTMENTS_COMMAND;
     }

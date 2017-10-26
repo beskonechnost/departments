@@ -23,20 +23,28 @@ public class AddDepartmentCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
 
+        boolean flagErrorAddNewDepartment = false;
+        String errorAddNewDepartment = null;
         String name = request.getParameter("nameNewDepartment");
-
+        LOG.debug("length name new ----> "+name.length());
 
         if(name==null || name.isEmpty()){
-            throw new AppException("The value of name new department can not be empty");
+            flagErrorAddNewDepartment = true;
+            errorAddNewDepartment = "The value of name new department can not be empty";
         }
 
-        if(name.length()<2||name.length()>45){
-            throw new AppException("Department name can not be shorter than two or longer than 45 characters");
+        if(name.length()<=3||name.length()>45){
+            flagErrorAddNewDepartment = true;
+            errorAddNewDepartment = "Department name can not be shorter than 3 or longer than 45 characters";
         }
 
-        Department department = new Department(name);
-        DaoDepartmentImpl.getInstance().addDepartment(department);
-
+        if(flagErrorAddNewDepartment){
+            request.setAttribute("nameNewDepartment", name);
+            request.setAttribute("errorAddNewDepartment", errorAddNewDepartment);
+        }else {
+            Department department = new Department(name);
+            DaoDepartmentImpl.getInstance().addDepartment(department);
+        }
         LOG.debug("Command finished");
         return Path.ALL_DEPARTMENTS_COMMAND;
     }

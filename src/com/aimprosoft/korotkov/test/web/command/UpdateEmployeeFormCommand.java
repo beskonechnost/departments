@@ -1,8 +1,10 @@
 package com.aimprosoft.korotkov.test.web.command;
 
 import com.aimprosoft.korotkov.test.Path;
-import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.dao.DaoDepartmentImpl;
+import com.aimprosoft.korotkov.test.db.dao.DaoEmployeeImpl;
 import com.aimprosoft.korotkov.test.db.entity.Department;
+import com.aimprosoft.korotkov.test.db.entity.Employee;
 import com.aimprosoft.korotkov.test.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -55,6 +57,9 @@ public class UpdateEmployeeFormCommand extends Command {
         String newDepartmentName = request.getParameter("newDepartmentName");
         LOG.debug("newDepartmentName --> "+ newDepartmentName);
 
+        boolean flagErrorUpdateEmployee = false;
+        StringBuilder errorUpdateEmployee = new StringBuilder("");
+
         boolean flag = false;
         if(oldFirstName!=newFirstName || oldLastName!=newLastName || oldBirthday!=newBirthday || oldPhone!=newPhone || oldEmail!=newEmail || oldDepartmentName!=newDepartmentName){
             flag=true;
@@ -77,28 +82,35 @@ public class UpdateEmployeeFormCommand extends Command {
             int years = now.get(GregorianCalendar.YEAR) - birthDay.get(GregorianCalendar.YEAR);
 
             if(years<14 || years>60){
-                throw new AppException("Unsuitable age");
+                flagErrorUpdateEmployee = true;
+                errorUpdateEmployee.append(" ").append("Age must be more than 14 and less than 60 years,");
+
             }
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            flagErrorUpdateEmployee = true;
+            errorUpdateEmployee.append(" ").append("You need to choose a department,");
         }
 
-        if(newEmail.isEmpty() || newEmail==null){
-            throw new AppException("The value of email can not be empty");
+        if(newEmail==null || newEmail.isEmpty()){
+            flagErrorUpdateEmployee = true;
+            errorUpdateEmployee.append(" ").append("The value of email can not be empty,");
         }
 
-        if(newPhone.isEmpty() || newPhone==null){
-            throw new AppException("The value of phone can not be empty");
+        if(newPhone==null  || newPhone.isEmpty()){
+            flagErrorUpdateEmployee = true;
+            errorUpdateEmployee.append(" ").append("The value of phone can not be empty,");
         }
 
 
         if(newFirstName.length()<2||newFirstName.length()>45){
-            throw new AppException("Employee first name can not be shorter than two or longer than 45 characters");
+            flagErrorUpdateEmployee = true;
+            errorUpdateEmployee.append(" ").append("Employee first name can not be shorter than two or longer than 45 characters,");
         }
 
         if(newLastName.length()<2||newLastName.length()>45){
-            throw new AppException("Employee last name can not be shorter than two or longer than 45 characters");
+            flagErrorUpdateEmployee = true;
+            errorUpdateEmployee.append(" ").append("Employee last name can not be shorter than two or longer than 45 characters,");
         }
 
         String domen1 = "[a-zA-Z][a-zA-Z[0-9]\u005F\u002E\u002D]*[a-z||0-9]";
@@ -106,27 +118,56 @@ public class UpdateEmployeeFormCommand extends Command {
         Pattern p = Pattern.compile(domen1 + "@" + domen1 + "\u002E" + domen2);
         Matcher m = p.matcher(newEmail);
         if(!m.matches()){
-            throw new AppException("New email does not meet the requirements");
+            flagErrorUpdateEmployee = true;
+            errorUpdateEmployee.append(" ").append("New email does not meet the requirements,");
         }
 
         String number = "(\\+)(380)([0-9]){2}(-)([0-9]){2}-[0-9]{2}-[0-9]{3}";
         Pattern p1 = Pattern.compile(number);
         Matcher m1 = p1.matcher(newPhone);
         if(!m1.matches()){
-            throw new AppException("New phone does not meet the requirements");
+            flagErrorUpdateEmployee = true;
+            errorUpdateEmployee.append(" ").append("New phone does not meet the requirements,");
         }
 
-        LOG.debug("flag --> "+ flag);
-        if(flag){
-            Department Dep = DBManager.getInstance().getDepartmentByName(newDepartmentName);
-            LOG.debug("Dep --> "+ Dep);
-            int idDep = Dep.getId();
+        if(flagErrorUpdateEmployee){
+            request.setAttribute("employeeFirstName",request.getParameter("newFirstName"));
+            request.setAttribute("employeeLastName",request.getParameter("newLastName"));
+            request.setAttribute("employeePhone",request.getParameter("newPhone"));
+            request.setAttribute("employeeEmail",request.getParameter("newEmail"));
+            request.setAttribute("employeeBirthday",request.getParameter("newBirthday"));
+            request.setAttribute("departmentUpdateId",request.getParameter("newDepartmentName"));
+            request.setAttribute("visibleUpdate",request.getParameter("visibleUpdate"));
+            errorUpdateEmployee.trimToSize();
+            errorUpdateEmployee.setLength(errorUpdateEmployee.length()-1);
+            request.setAttribute("errorUpdateEmployee", errorUpdateEmployee);
+        }else {
+            LOG.debug("flag --> " + flag);
+            if (flag) {
+                Department Dep = DaoDepartmentImpl.getInstance().getDepartmentByName(newDepartmentName);
+                LOG.debug("Dep --> " + Dep);
+                int idDep = Dep.getId();
 
-            DBManager.getInstance().updateEmployee(newFirstName, newLastName, d, newPhone, newEmail, idDep, id);
+                Employee employee = new Employee(newFirstName, newLastName, d, newPhone, newEmail, idDep);
+                employee.setId(id);
+                DaoEmployeeImpl.getInstance().updateEmployee(employee);
+            }
+        }
+
+        request.setAttribute("departmentId", request.getParameter("departmentId"));
+        String stringId = request.getParameter("departmentId");
+        int id1 = 0;
+        if(!(stringId==null)) {
+            id1 = Integer.parseInt(stringId);
+        }
+        if(id1!=0){
+            request.setAttribute("employees", DaoEmployeeImpl.getInstance().findEmployeesThisDepartment(id1));
+        }else{
+            request.setAttribute("employees", DaoEmployeeImpl.getInstance().findAllEmployees());
         }
 
 
         LOG.debug("Command finished");
-        return Path.ALL_DEPARTMENTS_COMMAND;
+        return Path.PAGE_EMPLOYEE;
     }
 }

@@ -21,7 +21,10 @@ public class RemovalConfirmationEmployeeCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
 
         request.setAttribute("departmentId", request.getParameter("departmentId"));
+        LOG.debug("delete employee departmentId --> " + request.getParameter("departmentId"));
         request.setAttribute("departmentName", request.getParameter("departmentName"));
+        LOG.debug("delete employee departmentName --> " + request.getParameter("departmentName"));
+        request.setAttribute("employees", request.getParameter("employees"));
 
         request.setAttribute("deleteEmployeeId", request.getParameter("employeeId"));
         LOG.debug("delete employee Id --> " + request.getParameter("employeeId"));

@@ -18,13 +18,13 @@ public class Employee extends Entity{
 
     public Employee() {
     }
-    public Employee(String firstName, String lastName, java.sql.Date d, String phone, String email, int id) {
+    public Employee(String firstName, String lastName, Date d, String phone, String email, int idDepartment) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = d;
         this.phone = phone;
         this.email = email;
-        this.idDepartment = id;
+        this.idDepartment = idDepartment;
     }
 
     public String getFirstName() {

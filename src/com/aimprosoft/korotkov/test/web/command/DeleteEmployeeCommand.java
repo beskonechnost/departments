@@ -1,7 +1,7 @@
 package com.aimprosoft.korotkov.test.web.command;
 
 import com.aimprosoft.korotkov.test.Path;
-import com.aimprosoft.korotkov.test.db.DBManager;
+import com.aimprosoft.korotkov.test.db.dao.DaoEmployeeImpl;
 import com.aimprosoft.korotkov.test.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -20,13 +20,16 @@ public class DeleteEmployeeCommand extends Command {
 
         int id = Integer.parseInt(request.getParameter("deleteEmployeeId"));
         LOG.debug("delete employee id -----------> "+ id);
-        DBManager.getInstance().deleteEmployee(id);
+        DaoEmployeeImpl.getInstance().deleteEmployee(id);
 
-        request.setAttribute("itemId", request.getParameter("departmentId"));
         LOG.debug("delete employee departmentId -----------> "+ request.getParameter("departmentId"));
-        request.setAttribute("itemName", request.getParameter("departmentName"));
         LOG.debug("delete employee departmentName -----------> "+ request.getParameter("departmentName"));
+        if(Integer.parseInt(request.getParameter("departmentId"))>0){
+            request.setAttribute("employees", DaoEmployeeImpl.getInstance().findEmployeesThisDepartment(Integer.parseInt(request.getParameter("departmentId"))));
+        }else{
+         request.setAttribute("employees", DaoEmployeeImpl.getInstance().findAllEmployees());
+        }
         LOG.debug("Command finished");
-        return Path.EMPLOYEE_THIS_DEPARTMENT_COMMAND;
+        return Path.PAGE_EMPLOYEE;
     }
 }

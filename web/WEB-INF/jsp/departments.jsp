@@ -1,16 +1,22 @@
-<%@ page pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
-<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
 
 <c:set var="title" value="Departments" scope="page" />
-<%@ include file="/WEB-INF/jspf/head.jspf" %>
+<link rel="stylesheet" type="text/css" media="screen" href="style/style.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <body>
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
 <table id="main-container">
 
+    <tr>
+        <div id="rightHeader">
+            <a href="controller?command=AllDepartments">All departments</a>
+            <a href="controller?command=ListEmployees">All employees</a>
+        </div>
+    </tr>
     <tr>
         <td class="content">
             <%-- CONTENT --%>
@@ -44,6 +50,7 @@
                             <td>
                                 <form action="controller" method="post">
                                     <input type="hidden" name="departmentId" value="${item.id}" />
+                                    <input type="hidden" name="visibleUpdateDepartment" value="${1}" />
                                     <input type="hidden" name="command" value="AllDepartments" />
                                     <input type="submit" value="Update">
                                 </form>
@@ -62,6 +69,7 @@
             </form>
         </td>
         <td class="content">
+            <c:if test="${visibleUpdateDepartment!=1}">
             <fieldset >
                 <legend>Add new department</legend>
                 <form id="add_form" action="controller" method="post">
@@ -69,23 +77,27 @@
 
                     <div>
                         <b>Enter the name of a new department: </b>
-                        <input name="nameNewDepartment">
+                        <input name="nameNewDepartment" value="<c:out value=""></c:out> ">
                     </div>
+                    <b><font size="5" color="red" face="Arial">${errorAddNewDepartment}</font></b><br>
                     <input type="submit" value="Add New Department"><br/>
                 </form>
             </fieldset><br>
-            <c:if test="${updateDepartmentId>0}">
+            </c:if>
+            <c:if test="${visibleUpdateDepartment==1}">
             <fieldset >
                 <legend>Update department</legend>
                 <form id="update_form" action="controller" method="post">
                     <input type="hidden" name="command" value="UpdateDepartmentForm" />
                     <input type="hidden" name="id" value="${updateDepartmentId}" />
                     <input type="hidden" name="oldName" value="${updateDepartmentName}" />
+                    <input type="hidden" name="visibleUpdateDepartment" value="${1}" />
 
                     <div>
-                        <p>Enter a new department name:</p>
-                        <input name="name" value="${updateDepartmentName}">
+                        <b>Enter a new department name:</b>
+                        <input name="name" value="<c:out value="${updateDepartmentName}"></c:out>">
                     </div>
+                    <b><font size="5" color="red" face="Arial">${errorUpdateDepartment}</font></b><br>
                     <input type="hidden" name="departmentId" value="${0}" />
                     <input type="submit" value="Update"><br/>
                 </form>
@@ -93,8 +105,6 @@
             </c:if>
         </td>
     </tr>
-
-    <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 
 </table>
 </body>

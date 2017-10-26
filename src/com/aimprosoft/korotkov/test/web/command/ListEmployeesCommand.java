@@ -26,7 +26,6 @@ public class ListEmployeesCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
 
-
         String id1 = request.getParameter("departmentId");
         int id = 0;
         if(!(id1==null)) {

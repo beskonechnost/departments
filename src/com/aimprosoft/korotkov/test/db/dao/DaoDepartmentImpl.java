@@ -1,6 +1,6 @@
 package com.aimprosoft.korotkov.test.db.dao;
 
-import com.aimprosoft.korotkov.test.db.DBManager1;
+import com.aimprosoft.korotkov.test.db.DBManager;
 import com.aimprosoft.korotkov.test.db.Fields;
 import com.aimprosoft.korotkov.test.db.entity.Department;
 import com.aimprosoft.korotkov.test.exception.DBException;
@@ -53,7 +53,7 @@ public class DaoDepartmentImpl implements DaoDepartment {
         ResultSet rs = null;
         Connection con = null;
         try {
-            con = DBManager1.getConnection();
+            con = DBManager.getConnection();
             stmt = con.createStatement();
             rs = stmt.executeQuery(SQL_FIND_ALL_DEPARTMENTS);
             while (rs.next()) {
@@ -61,11 +61,11 @@ public class DaoDepartmentImpl implements DaoDepartment {
             }
             con.commit();
         } catch (SQLException ex) {
-            DBManager1.rollback(con);
+            DBManager.rollback(con);
             LOG.error(Messages.ERR_CANNOT_OBTAIN_DEPARTMENTS, ex);
             throw new DBException(Messages.ERR_CANNOT_OBTAIN_DEPARTMENTS, ex);
         } finally {
-            DBManager1.close(con, stmt, rs);
+            DBManager.close(con, stmt, rs);
         }
         return departments;
     }
@@ -76,17 +76,17 @@ public class DaoDepartmentImpl implements DaoDepartment {
         ResultSet rs = null;
         Connection con = null;
         try {
-            con = DBManager1.getConnection();
+            con = DBManager.getConnection();
             pstmt = con.prepareStatement(SQL_UPDATE_DEPARTMENT);
             pstmt.setString(1, department.getName());
             pstmt.setInt(2, department.getId());
             pstmt.executeUpdate();
             con.commit();
         } catch (SQLException ex) {
-            DBManager1.rollback(con);
+            DBManager.rollback(con);
             throw new DBException(Messages.ERR_UPDATE_DEPARTMENT, ex);
         } finally {
-            DBManager1.close(con, pstmt, rs);
+            DBManager.close(con, pstmt, rs);
         }
     }
 
@@ -97,7 +97,7 @@ public class DaoDepartmentImpl implements DaoDepartment {
         ResultSet rs = null;
         Connection con = null;
         try {
-            con = DBManager1.getConnection();
+            con = DBManager.getConnection();
             con.setAutoCommit(false);
             pstmt = con.prepareStatement(SQL_DELETE_ALL_EMPLOYEES_THIS_DEPARTMENT);
             pstmt.setInt(1, idDepartment);
@@ -108,10 +108,10 @@ public class DaoDepartmentImpl implements DaoDepartment {
             pstmt1.executeUpdate();
             con.commit();
         } catch (SQLException ex) {
-            DBManager1.rollback(con);
+            DBManager.rollback(con);
             throw new DBException(Messages.ERR_DELETE_DEPARTMENT, ex);
         } finally {
-            DBManager1.close(con, pstmt, rs);
+            DBManager.close(con, pstmt, rs);
         }
     }
 
@@ -121,16 +121,16 @@ public class DaoDepartmentImpl implements DaoDepartment {
         ResultSet rs = null;
         Connection con = null;
         try {
-            con = DBManager1.getConnection();
+            con = DBManager.getConnection();
             pstmt = con.prepareStatement(SQL_ADD_DEPARTMENT);
             pstmt.setString(1, department.getName());
             pstmt.executeUpdate();
             con.commit();
         } catch (SQLException ex) {
-            DBManager1.rollback(con);
+            DBManager.rollback(con);
             throw new DBException(Messages.ERR_ADD_DEPARTMENT, ex);
         } finally {
-            DBManager1.close(con, pstmt, rs);
+            DBManager.close(con, pstmt, rs);
         }
     }
 
@@ -142,7 +142,7 @@ public class DaoDepartmentImpl implements DaoDepartment {
         Connection con = null;
         try {
             LOG.debug("name --> "+ name);
-            con = DBManager1.getConnection();
+            con = DBManager.getConnection();
             pstmt = con.prepareStatement(SQL_SELECT_DEPARTMENT_BY_NAME);
             pstmt.setString(1,name);
             pstmt.execute();
@@ -153,11 +153,11 @@ public class DaoDepartmentImpl implements DaoDepartment {
             }
             con.commit();
         } catch (SQLException ex) {
-            DBManager1.rollback(con);
+            DBManager.rollback(con);
             ex.printStackTrace();
             throw new DBException(Messages.ERR_SELECT_DEPARTMENT, ex);
         } finally {
-            DBManager1.close(con, pstmt, rs);
+            DBManager.close(con, pstmt, rs);
         }
         return dep;
     }
@@ -169,7 +169,7 @@ public class DaoDepartmentImpl implements DaoDepartment {
         ResultSet rs = null;
         Connection con = null;
         try {
-            con = DBManager1.getConnection();
+            con = DBManager.getConnection();
             pstmt = con.prepareStatement(SQL_SELECT_DEPARTMENT_BY_ID);
             pstmt.setInt(1, id);
             pstmt.execute();
@@ -180,11 +180,11 @@ public class DaoDepartmentImpl implements DaoDepartment {
             }
             con.commit();
         } catch (SQLException ex) {
-            DBManager1.rollback(con);
+            DBManager.rollback(con);
             ex.printStackTrace();
             throw new DBException(Messages.ERR_SELECT_DEPARTMENT, ex);
         } finally {
-            DBManager1.close(con, pstmt, rs);
+            DBManager.close(con, pstmt, rs);
         }
         return dep;
     }
@@ -196,7 +196,7 @@ public class DaoDepartmentImpl implements DaoDepartment {
         ResultSet rs = null;
         Connection con = null;
         try {
-            con = DBManager1.getConnection();
+            con = DBManager.getConnection();
             stmt = con.createStatement();
             rs = stmt.executeQuery(SQL_NAME_DEPARTMENTS);
             while (rs.next()) {
@@ -204,11 +204,11 @@ public class DaoDepartmentImpl implements DaoDepartment {
             }
             con.commit();
         } catch (SQLException ex) {
-            DBManager1.rollback(con);
+            DBManager.rollback(con);
             LOG.error(Messages.ERR_CANNOT_OBTAIN_DEPARTMENTS, ex);
             throw new DBException(Messages.ERR_CANNOT_OBTAIN_DEPARTMENTS, ex);
         } finally {
-            DBManager1.close(con, stmt, rs);
+            DBManager.close(con, stmt, rs);
         }
         return nameDepartments;
     }

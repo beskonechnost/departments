@@ -1,10 +1,12 @@
-<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
-<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
 
 <c:set var="title" value="Start" />
-<%@ include file="/WEB-INF/jspf/head.jspf" %>
+<link rel="stylesheet" type="text/css" media="screen" href="style/style.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <table id="main-container">
   <tr >
@@ -20,7 +22,9 @@
       </form>
     </td>
   </tr>
-  <%@ include file="/WEB-INF/jspf/footer.jspf"%>
+  <tr>
+    <td id="footer">Departments for Aimprosoft, from Korotkov Andrey</td>
+  </tr>
 
 </table>
 </body>
