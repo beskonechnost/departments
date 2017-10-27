@@ -16,8 +16,8 @@ CREATE TABLE `departments`.`employees` (
   `email` VARCHAR(64) NULL,
   `id_department` INT NOT NULL,
   PRIMARY KEY (`id`, `firstName`),
-  INDEX `id_departments_idx` (`id_department` ASC),
-  CONSTRAINT `id_departments`
+  INDEX `id_department_idx` (`id_department` ASC),
+  CONSTRAINT `id_department`
     FOREIGN KEY (`id_department`)
     REFERENCES `departments`.`departments` (`id`)
     ON DELETE NO ACTION
